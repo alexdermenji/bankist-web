@@ -29,3 +29,23 @@ document.addEventListener('keydown', function (e) {
     closeModal();
   }
 });
+
+////// Smooth scrolling (old-style)
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+console.log(btnScrollTo);
+const section1 = document.querySelector('#section--1');
+console.log(section1);
+
+btnScrollTo.addEventListener('click', function (e) {
+  const s1coords = section1.getBoundingClientRect();
+  console.log(s1coords);
+
+  window.scrollTo({
+    left: s1coords.left + window.pageXOffset,
+    top: s1coords.top + window.pageYOffset,
+    behavior: 'smooth',
+  });
+
+  ////// Smooth scrolling (new-style)
+  // section1.scrollIntoView({ behavior: 'smooth' });
+});
