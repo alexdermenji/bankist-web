@@ -79,7 +79,6 @@ tabContainer.addEventListener('click', function (e) {
 
 //function opacity hover effect
 const handleHover = function (e) {
-  console.log(this);
   if (e.target.classList.contains('nav__link')) {
     const link = e.target;
     //choose all nav_links in parent element .nav
@@ -96,6 +95,30 @@ const handleHover = function (e) {
   }
 };
 //add event listener for link
-console.log(nav);
+
 nav.addEventListener('mouseover', handleHover.bind(0.5));
-// nav.addEventListener('mouseout', handleHover.bind(1));
+nav.addEventListener('mouseout', handleHover.bind(1));
+
+//////////////////////////Sticky navigation (bad performance way)
+// const initialCoords = section1.getBoundingClientRect();
+// window.addEventListener('scroll', function (e) {
+//   if (window.scrollY > initialCoords.top) nav.classList.add('sticky');
+//   else nav.classList.remove('sticky');
+// });
+
+///////////////////////////Sticky navigation(good performance way)
+const header = document.querySelector('.header');
+const navHeight = nav.getBoundingClientRect().height;
+
+const stickyNav = function (entries) {
+  const [entry] = entries;
+  if (!entry.isIntersecting) nav.classList.add('sticky');
+  else nav.classList.remove('sticky');
+};
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`,
+});
+
+headerObserver.observe(header);
